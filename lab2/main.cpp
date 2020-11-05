@@ -34,6 +34,12 @@ void printMatrix(double a[][columns]) {
     }
 }
 
+void printSolution(double x[]) {
+    for (std::size_t i = 0; i < rows; i++) {
+        std::cout << "x_{" << i + 1 << "} = " << x[i] << std::endl;
+    }
+}
+
 void forwardGaussianElimination(double a[][columns]) {
     std::size_t maxRowIndex;
     for (std::size_t k = 0; k < rows; k++) {
@@ -56,6 +62,21 @@ void forwardGaussianElimination(double a[][columns]) {
     }
 }
 
+void backGaussianSubstitution(double a[][columns], double x[]) {
+    for (int i = rows - 1; i >= 0; i--) {
+        x[i] = a[i][columns - 1];
+
+        for (std::size_t j = i + 1; j < columns - 1; j++) {
+            x[i] = x[i] - a[i][j] * x[j];
+        }
+    }
+}
+
+void gaussianElimination(double a[][columns], double x[]) {
+    forwardGaussianElimination(a);
+    backGaussianSubstitution(a, x);
+}
+
 int main()
 {
     double a[rows][columns] = {
@@ -65,9 +86,20 @@ int main()
         {1.0, -5.0, 3.0, -3.0, 3.0}
     };
 
-    forwardGaussianElimination(a);
+    double x[rows];
 
+    std::cout << "-- Initial Matrix ---" << std::endl;
     printMatrix(a);
+    std::cout << std::endl << std::endl;
+
+    gaussianElimination(a, x);
+
+    std::cout << "--- After Forward Elimination ---" << std::endl;
+    printMatrix(a);
+    std::cout << std::endl << std::endl;
+
+    std::cout << "--- Solution ---" << std::endl;
+    printSolution(x);
 
     return 0;
 }
