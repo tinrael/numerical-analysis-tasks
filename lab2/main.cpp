@@ -34,6 +34,28 @@ void printMatrix(double a[][columns]) {
     }
 }
 
+void forwardGaussianElimination(double a[][columns]) {
+    std::size_t maxRowIndex;
+    for (std::size_t k = 0; k < rows; k++) {
+        maxRowIndex = getMaxRowIndex(a, k);
+        swapMatrixRows(a, k, maxRowIndex);
+
+        for (std::size_t j = k + 1; j < columns; j++) {
+            a[k][j] = a[k][j] / a[k][k];
+        }
+
+        a[k][k] = 1.0;
+
+        for (std::size_t i = k + 1; i < rows; i++) {
+            for (std::size_t j = k + 1; j < columns; j++) {
+                a[i][j] = a[i][j] - a[i][k] * a[k][j];
+            }
+
+            a[i][k] = 0.0;
+        }
+    }
+}
+
 int main()
 {
     double a[rows][columns] = {
@@ -42,6 +64,8 @@ int main()
         {2.0, 0.0, 1.0, -1.0, 1.0},
         {1.0, -5.0, 3.0, -3.0, 3.0}
     };
+
+    forwardGaussianElimination(a);
 
     printMatrix(a);
 
