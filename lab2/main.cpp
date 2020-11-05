@@ -72,6 +72,7 @@ void backGaussianSubstitution(double a[][columns], double x[]) {
     }
 }
 
+// Gaussian Elimination with Partial Pivoting
 void gaussianElimination(double a[][columns], double x[]) {
     forwardGaussianElimination(a);
     backGaussianSubstitution(a, x);
