@@ -1,9 +1,23 @@
 #include <iostream>
 #include <cstddef>
 #include <algorithm>
+#include <cmath>
 
 const std::size_t columns = 5;
 const std::size_t rows = 4;
+
+// argmax(|a[i][k]|), where i from k to columns
+std::size_t getMaxRowIndex(double a[][columns], std::size_t k) {
+    std::size_t maxRowIndex = k;
+
+    for (std::size_t i = k + 1; i < rows; i++) {
+        if (std::abs(a[i][k]) > std::abs(a[maxRowIndex][k])) {
+            maxRowIndex = i;
+        }
+    }
+
+    return maxRowIndex;
+}
 
 void swapMatrixRows(double a[][columns], std::size_t rowIndex1, std::size_t rowIndex2) {
     for (std::size_t j = 0; j < columns; j++) {
