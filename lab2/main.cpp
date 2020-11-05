@@ -1,8 +1,15 @@
 #include <iostream>
 #include <cstddef>
+#include <algorithm>
 
 const std::size_t columns = 5;
 const std::size_t rows = 4;
+
+void swapMatrixRows(double a[][columns], std::size_t rowIndex1, std::size_t rowIndex2) {
+    for (std::size_t j = 0; j < columns; j++) {
+        std::swap(a[rowIndex1][j], a[rowIndex2][j]);
+    }
+}
 
 void printMatrix(double a[][columns]) {
     for (std::size_t i = 0; i < rows; i++) {
@@ -15,8 +22,6 @@ void printMatrix(double a[][columns]) {
 
 int main()
 {
-
-
     double a[rows][columns] = {
         {3.0, 1.0, -1.0, 2.0, 6.0},
         {-5.0, 1.0, 3.0, -4.0, -12.0},
