@@ -78,6 +78,49 @@ void gaussianElimination(double a[][columns], double x[]) {
     backGaussianSubstitution(a, x);
 }
 
+double manhattanNorm(double x[], std::size_t numOfElements) {
+    double result = 0;
+
+    for (std::size_t i = 0; i < numOfElements; i++) {
+        result += std::abs(x[i]);
+    }
+
+    return result;
+}
+
+void jacobiMethod(double a[][columns], double x[], double eps) {
+    double prev[rows];
+    double difference[rows];
+
+    std::size_t step = 0;
+
+    do {
+        for (std::size_t i = 0; i < rows; i++) {
+            prev[i] = x[i];
+        }
+
+        for (std::size_t i = 0; i < rows; i++) {
+            x[i] = a[i][columns - 1] / a[i][i];
+
+            for (std::size_t j = 0; j < columns - 1; j++) {
+                if (i != j) {
+                    x[i] = x[i] - a[i][j] / a[i][i] * prev[j];
+                }
+            }
+        }
+
+        for (std::size_t i = 0; i < rows; i++) {
+            difference[i] = x[i] - prev[i];
+        }
+
+        std::cout << "Step " << step << ": " << std::endl;
+        printSolution(x);
+        std::cout << std::endl;
+
+        step++;
+    } while (manhattanNorm(difference, rows) > eps);
+}
+
 int main()
 {
     double a[rows][columns] = {
@@ -89,6 +132,7 @@ int main()
 
     double x[rows];
 
+    std::cout << "******** Gaussian Elimination with Partial Pivoting *******" << std::endl;
     std::cout << "-- Initial Matrix ---" << std::endl;
     printMatrix(a);
     std::cout << std::endl << std::endl;
@@ -101,6 +145,24 @@ int main()
 
     std::cout << "--- Solution ---" << std::endl;
     printSolution(x);
+
+    std::cout << "**********************************" << std::endl << std::endl;;
+
+    double b[rows][columns] = {
+        {2.0, 1.0, -1.0, 0.0, 1.0},
+        {1.0, 3.0, 0.0, 1.0, -3.0},
+        {-1.0, 0.0, 2.0, 1.0, -2.0},
+        {0.0, 1.0, 1.0, 4.0, -5.0}
+    };
+
+    double t[rows] = {0.0};
+
+    std::cout << "******** Jacobi method ********" << std::endl;
+    std::cout << "-- Initial Matrix ---" << std::endl;
+    printMatrix(b);
+    std::cout << std::endl;
+
+    jacobiMethod(b, t, 0.00001);
 
     return 0;
 }
