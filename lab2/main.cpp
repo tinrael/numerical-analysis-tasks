@@ -162,7 +162,7 @@ int main()
     printMatrix(b);
     std::cout << std::endl;
 
-    jacobiMethod(b, t, 0.00001);
+    jacobiMethod(b, t, 0.0001);
 
     return 0;
 }
