@@ -2,11 +2,8 @@
 
 #include <iostream>
 
-Matrix::Matrix(std::size_t rows, std::size_t columns)
+Matrix::Matrix(std::size_t rows, std::size_t columns) : rows(rows), columns(columns)
 {
-    this->rows = rows;
-    this->columns = columns;
-
     a = new double*[rows];
     for (std::size_t i = 0; i < rows; i++) {
         a[i] = new double[columns];
