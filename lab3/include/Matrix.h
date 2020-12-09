@@ -14,6 +14,9 @@ class Matrix
 
         void print() const;
 
+        std::size_t getRows() const;
+        std::size_t getColumns() const;
+
     protected:
 
     private:

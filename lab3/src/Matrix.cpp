@@ -55,3 +55,11 @@ void Matrix::print() const {
         std::cout << std::endl;
     }
 }
+
+std::size_t Matrix::getRows() const {
+    return rows;
+}
+
+std::size_t Matrix::getColumns() const {
+    return columns;
+}
