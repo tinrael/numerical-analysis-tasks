@@ -7,6 +7,7 @@ class Matrix
 {
     public:
         Matrix(std::size_t rows, std::size_t columns);
+        Matrix(const Matrix& b);
         virtual ~Matrix();
 
         Matrix& operator=(const Matrix& b);

@@ -16,6 +16,20 @@ Matrix::Matrix(std::size_t rows, std::size_t columns) : rows(rows), columns(colu
     }
 }
 
+Matrix::Matrix(const Matrix& b) : rows(b.rows), columns(b.columns)
+{
+    a = new double*[rows];
+    for (std::size_t i = 0; i < rows; i++) {
+        a[i] = new double[columns];
+    }
+
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < columns; j++) {
+            a[i][j] = b(i, j);
+        }
+    }
+}
+
 Matrix::~Matrix()
 {
     for (std::size_t i = 0; i < rows; i++) {
