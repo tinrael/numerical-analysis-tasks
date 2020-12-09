@@ -30,6 +30,10 @@ Matrix& Matrix::operator=(const Matrix& b) {
         return *this;
     }
 
+    if (this->rows != b.rows || this->columns != b.columns) {
+        throw std::invalid_argument( "Matrices are not the same size." );
+    }
+
     for (std::size_t i = 0; i < rows; i++) {
         for (std::size_t j = 0; j < columns; j++) {
             a[i][j] = b(i, j);
