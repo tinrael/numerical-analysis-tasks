@@ -25,7 +25,21 @@ Matrix::~Matrix()
     delete[] a;
 }
 
-double& Matrix::operator()(std::size_t i, std::size_t j) {
+Matrix& Matrix::operator=(const Matrix& b) {
+    if (this == &b) {
+        return *this;
+    }
+
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < columns; j++) {
+            a[i][j] = b(i, j);
+        }
+    }
+
+    return *this;
+}
+
+double& Matrix::operator()(std::size_t i, std::size_t j) const {
     if (i >= this->rows || j >= this->columns) {
         throw std::invalid_argument( "out-of-bounds" );
     }
@@ -33,7 +47,7 @@ double& Matrix::operator()(std::size_t i, std::size_t j) {
     return a[i][j];
 }
 
-void Matrix::print() {
+void Matrix::print() const {
     for (std::size_t i = 0; i < rows; i++) {
         for (std::size_t j = 0; j < columns; j++) {
             std::cout << a[i][j] << " ";

@@ -9,9 +9,10 @@ class Matrix
         Matrix(std::size_t rows, std::size_t columns);
         virtual ~Matrix();
 
-        double& operator()(std::size_t i, std::size_t j);
+        Matrix& operator=(const Matrix& b);
+        double& operator()(std::size_t i, std::size_t j) const;
 
-        void print();
+        void print() const;
 
     protected:
 
