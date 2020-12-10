@@ -129,6 +129,7 @@ std::size_t Matrix::getColumns() const {
     return columns;
 }
 
+// vector norm
 double Matrix::calculateManhattanNorm(Matrix v) {
     if (v.rows != 1 && v.columns != 1) {
         throw std::invalid_argument( "The argument is not a vector." );

@@ -22,6 +22,7 @@ class Matrix
         std::size_t getRows() const;
         std::size_t getColumns() const;
 
+        // vector norm
         static double calculateManhattanNorm(Matrix v);
 
         friend Matrix operator*(double lhs, const Matrix& rhs);
