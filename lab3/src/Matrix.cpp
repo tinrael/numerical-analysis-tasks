@@ -83,6 +83,22 @@ Matrix Matrix::operator*(const Matrix& rhs) const {
     return result;
 }
 
+Matrix Matrix::operator-(const Matrix& rhs) const {
+    if (rows != rhs.rows || columns != rhs.columns) {
+        throw std::invalid_argument( "Two matrices must have an equal number of rows and columns to be subtracted." );
+    }
+
+    Matrix result(rows, columns);
+
+    for (std::size_t i = 0; i < result.rows; i++) {
+        for (std::size_t j = 0; j < result.columns; j++) {
+            result(i, j) = a[i][j] - rhs(i, j);
+        }
+    }
+
+    return result;
+}
+
 Matrix Matrix::transpose() const {
     Matrix result(columns, rows);
 
