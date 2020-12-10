@@ -99,3 +99,15 @@ std::size_t Matrix::getRows() const {
 std::size_t Matrix::getColumns() const {
     return columns;
 }
+
+Matrix operator*(double lhs, const Matrix& rhs) {
+    Matrix result(rhs.rows, rhs.columns);
+
+    for (std::size_t i = 0; i < result.rows; i++) {
+        for (std::size_t j = 0; j < result.columns; j++) {
+            result(i, j) = lhs * rhs(i, j);
+        }
+    }
+
+    return result;
+}

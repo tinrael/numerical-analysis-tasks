@@ -19,6 +19,8 @@ class Matrix
         std::size_t getRows() const;
         std::size_t getColumns() const;
 
+        friend Matrix operator*(double lhs, const Matrix& rhs);
+
     protected:
 
     private:
