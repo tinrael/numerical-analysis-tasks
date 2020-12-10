@@ -150,6 +150,16 @@ double Matrix::calculateManhattanNorm(Matrix v) {
     return result;
 }
 
+Matrix Matrix::getIdentityMatrix(std::size_t n) {
+    Matrix result(n, n);
+
+    for (std::size_t i = 0; i < n; i++) {
+        result(i, i) = 1.0;
+    }
+
+    return result;
+}
+
 Matrix operator*(double lhs, const Matrix& rhs) {
     Matrix result(rhs.rows, rhs.columns);
 
