@@ -12,6 +12,7 @@ class Matrix
 
         Matrix& operator=(const Matrix& b);
         double& operator()(std::size_t i, std::size_t j) const;
+        Matrix operator*(const Matrix& rhs) const;
 
         void print() const;
 

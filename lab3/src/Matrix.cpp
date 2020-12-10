@@ -65,6 +65,24 @@ double& Matrix::operator()(std::size_t i, std::size_t j) const {
     return a[i][j];
 }
 
+Matrix Matrix::operator*(const Matrix& rhs) const {
+    if (columns != rhs.rows) {
+        throw std::invalid_argument( "The number of columns in the first matrix must be equal to the number of rows in the second matrix." );
+    }
+
+    Matrix result(rows, rhs.columns);
+
+    for (std::size_t i = 0; i < result.rows; i++) {
+        for (std::size_t j = 0; j < result.columns; j++) {
+            for (std::size_t r = 0; r < columns; r++) {
+                result(i, j) += a[i][r] * rhs(r, j);
+            }
+        }
+    }
+
+    return result;
+}
+
 void Matrix::print() const {
     for (std::size_t i = 0; i < rows; i++) {
         for (std::size_t j = 0; j < columns; j++) {
