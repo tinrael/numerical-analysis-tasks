@@ -1,6 +1,7 @@
 #include "Matrix.h"
 
 #include <iostream>
+#include <cmath>
 
 Matrix::Matrix(std::size_t rows, std::size_t columns) : rows(rows), columns(columns)
 {
@@ -126,6 +127,26 @@ std::size_t Matrix::getRows() const {
 
 std::size_t Matrix::getColumns() const {
     return columns;
+}
+
+double Matrix::calculateManhattanNorm(Matrix v) {
+    if (v.rows != 1 && v.columns != 1) {
+        throw std::invalid_argument( "The argument is not a vector." );
+    }
+
+    double result = 0;
+
+    if (v.columns == 1) {
+        for (std::size_t i = 0; i < v.rows; i++) {
+            result += std::abs(v(i, 0));
+        }
+    } else {
+        for (std::size_t i = 0; i < v.columns; i++) {
+            result += std::abs(v(0, i));
+        }
+    }
+
+    return result;
 }
 
 Matrix operator*(double lhs, const Matrix& rhs) {
