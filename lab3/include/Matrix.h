@@ -14,6 +14,8 @@ class Matrix
         double& operator()(std::size_t i, std::size_t j) const;
         Matrix operator*(const Matrix& rhs) const;
 
+        Matrix transpose() const;
+
         void print() const;
 
         std::size_t getRows() const;

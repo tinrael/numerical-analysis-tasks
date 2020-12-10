@@ -83,6 +83,18 @@ Matrix Matrix::operator*(const Matrix& rhs) const {
     return result;
 }
 
+Matrix Matrix::transpose() const {
+    Matrix result(columns, rows);
+
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < columns; j++) {
+            result(j, i) = a[i][j];
+        }
+    }
+
+    return result;
+}
+
 void Matrix::print() const {
     for (std::size_t i = 0; i < rows; i++) {
         for (std::size_t j = 0; j < columns; j++) {
