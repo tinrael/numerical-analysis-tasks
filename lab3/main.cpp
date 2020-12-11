@@ -56,6 +56,7 @@ void jacobiEigenvalueAlgorithm(const Matrix& A0, double eps) {
     std::size_t n = A.getRows();
 
     Matrix U(n, n);
+    Matrix X(Matrix::getIdentityMatrix(n)); // eigenvectors
 
     while (t(A) > eps) {
         std::size_t i = 0;
@@ -92,11 +93,18 @@ void jacobiEigenvalueAlgorithm(const Matrix& A0, double eps) {
         U(i, j) = -std::sin(phi);
         U(j, i) = std::sin(phi);
 
+        X = X * U;
+
         A = U.transpose() * A * U;
     }
 
     cout << "The eigenvalues are: " << endl;
-    A.print();
+    for (std::size_t i = 0; i < n; i++) {
+        cout << A(i, i) << endl;
+    }
+
+    cout << "The corresponding eigenvectors: " << endl;
+    X.print();
 }
 
 int main()
