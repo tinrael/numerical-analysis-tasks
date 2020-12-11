@@ -48,6 +48,57 @@ double t(const Matrix& a) {
     return std::sqrt(result);
 }
 
+void jacobiEigenvalueAlgorithm(const Matrix& A0, double eps) {
+    const double PI = 2.0 * std::asin(1.0);
+
+    Matrix A(A0);
+
+    std::size_t n = A.getRows();
+
+    Matrix U(n, n);
+
+    while (t(A) > eps) {
+        std::size_t i = 0;
+        std::size_t j = 0;
+
+        double maxAbsValue = -1;
+        double curAbsValue = -1;
+
+        double phi = 0.0;
+        double denominator = 0.0;
+
+        for (std::size_t k = 0; k < n; k++) {
+            for (std::size_t l = k + 1; l < n; l++) {
+                curAbsValue = std::abs(A(k, l));
+
+                if (curAbsValue > maxAbsValue) {
+                    maxAbsValue = curAbsValue;
+                    i = k;
+                    j = l;
+                }
+            }
+        }
+
+        denominator = A(i, i) - A(j, j);
+        if (std::abs(denominator) <= eps) {
+            phi = PI / 4.0;
+        } else {
+            phi = 0.5 * std::atan((2.0 * A(i, j)) / denominator);
+        }
+
+        U = Matrix::getIdentityMatrix(n);
+        U(i, i) = std::cos(phi);
+        U(j, j) = std::cos(phi);
+        U(i, j) = -std::sin(phi);
+        U(j, i) = std::sin(phi);
+
+        A = U.transpose() * A * U;
+    }
+
+    cout << "The eigenvalues are: " << endl;
+    A.print();
+}
+
 int main()
 {
     double eps = 0.0001;
@@ -87,7 +138,7 @@ int main()
 
     cout << " ---- ---- ---- ---- ---- " << endl;
 
-    powerIteration(A, eps);
+    jacobiEigenvalueAlgorithm(A, eps);
 
     return 0;
 }
