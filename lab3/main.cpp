@@ -5,7 +5,7 @@
 using std::cout;
 using std::endl;
 
-void powerIteration(Matrix A, double eps) {
+void powerIteration(const Matrix& A, double eps) {
     Matrix x(A.getRows(), 1);
 
     for (std::size_t i = 0; i < x.getRows(); i++) {
