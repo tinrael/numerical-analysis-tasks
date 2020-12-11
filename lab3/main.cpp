@@ -5,11 +5,6 @@
 using std::cout;
 using std::endl;
 
-/* TODO: fix it.
- * This function does not work correctly, because found by this function
- * the greatest (in absolute value) eigenvalue and the corresponding eigenvector
- * are incorrect.
- */
 void powerIteration(Matrix A, double eps) {
     Matrix x(A.getRows(), 1);
 
@@ -21,7 +16,7 @@ void powerIteration(Matrix A, double eps) {
 
     e = (1.0 / Matrix::calculateManhattanNorm(x)) * x;
     x = A * e;
-    double u_cur = (x.transpose() * e)(0, 0);
+    double u_cur = (x.transpose() * e)(0, 0) / (e.transpose() * e)(0, 0);
 
     double u_prev;
 
@@ -29,7 +24,7 @@ void powerIteration(Matrix A, double eps) {
         e = (1.0 / Matrix::calculateManhattanNorm(x)) * x;
         x = A * e;
         u_prev = u_cur;
-        u_cur = (x.transpose() * e)(0, 0);
+        u_cur = (x.transpose() * e)(0, 0) / (e.transpose() * e)(0, 0);
     } while (std::abs(u_cur - u_prev) >= eps);
 
     cout << "The greatest (in absolute value) eigenvalue: " << u_cur << endl;
