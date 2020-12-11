@@ -33,6 +33,21 @@ void powerIteration(const Matrix& A, double eps) {
     e.print();
 }
 
+double t(const Matrix& a) {
+    std::size_t rows = a.getRows();
+    std::size_t columns = a.getColumns();
+
+    double result = 0.0;
+
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = i + 1; j < columns; j++) {
+            result += a(i, j) * a(i, j);
+        }
+    }
+
+    return std::sqrt(result);
+}
+
 int main()
 {
     double eps = 0.0001;
