@@ -5,7 +5,7 @@
 using std::cout;
 using std::endl;
 
-void powerIteration(const Matrix& A, double eps) {
+double powerIteration(const Matrix& A, double eps, bool print) {
     Matrix x(A.getRows(), 1);
 
     for (std::size_t i = 0; i < x.getRows(); i++) {
@@ -27,10 +27,14 @@ void powerIteration(const Matrix& A, double eps) {
         u_cur = (x.transpose() * e)(0, 0) / (e.transpose() * e)(0, 0);
     } while (std::abs(u_cur - u_prev) >= eps);
 
-    cout << "The greatest (in absolute value) eigenvalue: " << u_cur << endl;
+    if (print) {
+        cout << "The greatest (in absolute value) eigenvalue of A: " << u_cur << endl;
 
-    cout << "The corresponding eigenvector: " << endl;
-    e.print();
+        cout << "The corresponding eigenvector of A: " << endl;
+        e.print();
+    }
+
+    return u_cur;
 }
 
 double t(const Matrix& a) {
@@ -98,12 +102,12 @@ void jacobiEigenvalueAlgorithm(const Matrix& A0, double eps) {
         A = U.transpose() * A * U;
     }
 
-    cout << "The eigenvalues are: " << endl;
+    cout << "The eigenvalues of A are: " << endl;
     for (std::size_t i = 0; i < n; i++) {
         cout << A(i, i) << endl;
     }
 
-    cout << "The corresponding eigenvectors: " << endl;
+    cout << "The corresponding eigenvectors of A: " << endl;
     X.print();
 }
 
@@ -142,9 +146,24 @@ int main()
     A(4, 3) = 1.25;
     A(4, 4) = 6.21;
 
+    cout << " ---- ---- A ---- ---- " << endl;
     A.print();
 
-    cout << " ---- ---- ---- ---- ---- " << endl;
+    cout << endl;
+
+    cout << " ---- ---- Power iteration ---- ---- " << endl;
+
+    double lambdaMaxA = powerIteration(A, eps, true); // the greatest (in absolute value) eigenvalue
+
+    Matrix B(lambdaMaxA * Matrix::getIdentityMatrix(A.getRows()) - A);
+
+    double lambdaMaxB = powerIteration(B, eps, false); // the greatest (in absolute value) eigenvalue
+
+    cout << "The lowest (not in absolute value) eigenvalue of A: " << lambdaMaxA - lambdaMaxB << endl; // min( lambda_{i} ) of matrix A, i = 1...n
+
+    cout << endl;
+
+    cout << " ---- ---- Jacobi eigenvalue algorithm ---- ---- " << endl;
 
     jacobiEigenvalueAlgorithm(A, eps);
 
